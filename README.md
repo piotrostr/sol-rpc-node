@@ -24,6 +24,7 @@ GOOGLE_APPLICATION_CREDENTIALS=/path/to/cred.json terraform apply
 5. re-log into the VM, ensure that the user is `solana`
 6. setup validator account - `./hack/setup-validator-account.sh`
 7. run node `./hack/run-node.sh`
+8. check health with `./hack/check-health.sh`
 
 ## Production considerations
 
