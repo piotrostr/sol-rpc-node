@@ -1,18 +1,32 @@
 # Solana RPC Node
 
+## Resources Provisioning
+
 Be sure to generate a service account for terraform with Compute Engine Editor
 permissions and download the key
 
 then
 
-```
+```sh
 terraform init
 ```
 
 and
 
-```
+```sh
 GOOGLE_APPLICATION_CREDENTIALS=/path/to/cred.json terraform apply
+```
+
+Then, the VM could be accessed with ssh
+
+```sh
+gcloud compute ssh --zone us-central1-a sol-node-vm
+```
+
+or using any ssh client and the public IP, it will be outputted but can be re-grabbed with
+
+```sh
+terraform output
 ```
 
 ## Setup instructions
