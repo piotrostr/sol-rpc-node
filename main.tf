@@ -34,7 +34,7 @@ resource "google_compute_instance" "vm_instance" {
 resource "google_compute_disk" "vm_disk" {
   name = "sol-node-disk"
   type = "pd-ssd"
-  size = 1000
+  size = 1500
   zone = "us-central1-a"
 }
 
