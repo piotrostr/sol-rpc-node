@@ -13,3 +13,10 @@ sudo mkdir -p /mnt/disks/solana
 sudo mount -o discard,defaults /dev/sdb /mnt/disks/solana
 
 sudo chmod a+w /mnt/disks/solana
+
+# be sure to also allocate swap
+sudo fallocate -l 256G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+echo "/swapfile none swap sw 0 0" | sudo tee -a /etc/fstab
