@@ -14,9 +14,11 @@ sudo mount -o discard,defaults /dev/sdb /mnt/disks/solana
 
 sudo chmod a+w /mnt/disks/solana
 
-# be sure to also allocate swap
-sudo fallocate -l 256G /swapfile
-sudo chmod 600 /swapfile
+# configure 250GB swap
+sudo dd if=/dev/zero of=/swapfile bs=1MiB count=250KiB
+sudo chmod 0600 /swapfile
 sudo mkswap /swapfile
-sudo swapon /swapfile
-echo "/swapfile none swap sw 0 0" | sudo tee -a /etc/fstab
+echo “/swapfile swap swap defaults 0 0” | sudo tee -a /etc/fstab
+sudo swapon -a
+sudo sysctl vm.swappiness=10
+free -g

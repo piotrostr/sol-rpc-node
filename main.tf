@@ -1,6 +1,6 @@
 resource "google_compute_instance" "vm_instance" {
   name         = "sol-node-vm"
-  machine_type = "n2d-highmem-64" // (64 vCPU (AMD 32 core), 512 GB memory)
+  machine_type = "n2-highmem-64" // (32 cores, 512 GB memory)
   zone         = "us-central1-a"
 
   boot_disk {
@@ -11,7 +11,8 @@ resource "google_compute_instance" "vm_instance" {
   }
 
   network_interface {
-    network = "default"
+    network  = "default"
+    nic_type = "GVNIC"
     access_config {
       nat_ip = google_compute_address.static_ip.address
     }
