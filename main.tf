@@ -34,8 +34,11 @@ resource "google_compute_instance" "vm_instance" {
 resource "google_compute_disk" "vm_disk" {
   name = "sol-node-disk"
   type = "pd-ssd"
-  size = 1500
+  size = 2000
   zone = "us-central1-a"
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "google_compute_address" "static_ip" {
