@@ -6,6 +6,7 @@ resource "google_compute_instance" "vm_instance" {
   boot_disk {
     initialize_params {
       image = "ubuntu-os-cloud/ubuntu-2004-lts"
+      size  = 50
     }
   }
 
@@ -15,12 +16,19 @@ resource "google_compute_instance" "vm_instance" {
       nat_ip = google_compute_address.static_ip.address
     }
   }
+
   attached_disk {
     mode   = "READ_WRITE"
     source = google_compute_disk.vm_disk.id
   }
 
-  depends_on = [google_compute_disk.vm_disk, google_compute_address.static_ip]
+  tags = ["sol-node-vm"]
+
+  depends_on = [
+    google_compute_disk.vm_disk,
+    google_compute_address.static_ip,
+    google_compute_firewall.solana_firewall,
+  ]
 }
 
 resource "google_compute_disk" "vm_disk" {
@@ -34,4 +42,19 @@ resource "google_compute_address" "static_ip" {
   name         = "sol-node-static-ip"
   address_type = "EXTERNAL"
   region       = "us-central1"
+}
+
+resource "google_compute_firewall" "solana_firewall" {
+  name    = "allow-solana-ports"
+  network = "default"
+  allow {
+    protocol = "tcp"
+    ports    = ["8899", "8900", "8001"]
+  }
+  allow {
+    protocol = "udp"
+    ports    = ["8000-8020"]
+  }
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["sol-node-vm"]
 }
