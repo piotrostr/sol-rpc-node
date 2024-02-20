@@ -14,4 +14,13 @@ vm.max_map_count = 1000000
 fs.nr_open = 1000000
 EOF"
 
+
+echo "DefaultLimitNOFILE=1000000" | sudo tee -a /etc/systemd/system.conf > /dev/null 
+sudo systemctl daemon-reload
+
+sudo bash -c "cat >/etc/security/limits.d/90-solana-nofiles.conf <<EOF
+# Increase process file descriptor count limit
+* - nofile 1000000
+EOF"
+
 sudo sysctl -p /etc/sysctl.d/21-solana-validator.conf
