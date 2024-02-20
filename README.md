@@ -28,6 +28,8 @@ GOOGLE_APPLICATION_CREDENTIALS=/path/to/cred.json terraform apply
 
 ## Production considerations
 
+The security keys should be generated locally and scp'ied to the VM afterwards
+
 Ideally the node would be ran as a system service, there should be two separate
 mounts for the accounts and the ledger
 
